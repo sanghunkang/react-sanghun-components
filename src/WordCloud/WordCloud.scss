@@ -1,0 +1,21 @@
+.word-cloud {
+  width: 90vw;
+  height: 90vh;
+  background-color: $blue-10;
+}
+
+
+
+.word-point__text {
+  alignment-baseline: hanging;
+
+  fill: $cyan-50;
+  font-weight: bold; 
+  background-color: $green-30;
+  
+  &.mouse-over {
+    fill: $magenta-50;
+  }
+}
+
+
