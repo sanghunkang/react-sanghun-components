@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { Profiler, useEffect, useState, useRef } from 'react';
 import WordPoint from './WordPoint';
 import { WordInfo }from './types';
 
@@ -28,7 +28,6 @@ type RenderingInfo = {
 type RenderingAnchorPoint = {
   x: number,
   y: number,
-  appendingTo: string,
 }
 
 export default function WordCloud(props: Props) {
@@ -47,7 +46,6 @@ export default function WordCloud(props: Props) {
       setRenderingAnchorPoint({
         x: boundingClientRect.width * 0.35,
         y: boundingClientRect.height / 2,
-        appendingTo: 'up',
       });
       console.log(renderingAnchorPoint);
     }
@@ -62,7 +60,6 @@ export default function WordCloud(props: Props) {
       setRenderingInfos(r => [...r, {
         x: renderingAnchorPoint.x,
         y: renderingAnchorPoint.y,
-        appendingTo: renderingAnchorPoint.appendingTo,
         weight: wordInfo.count,
         text: wordInfo.text,
       }]);
@@ -76,7 +73,6 @@ export default function WordCloud(props: Props) {
       setRenderingAnchorPoint({
         x: boundingClientRect.x,
         y: boundingClientRect.y,
-        appendingTo: boundingClientRect.appendingTo,
       });
       console.log(renderingAnchorPoint);
     }
@@ -88,22 +84,23 @@ export default function WordCloud(props: Props) {
       <svg
         className="word-cloud"
         ref={element => { ref.current = element; }}>
-        {
-          
+        {/* <Profiler id="Content" onRender={onRenderCallback}> */}
+          <GridCells
+            width={752.390625}
+            height={845.09375}
+            resolution={20}
+          />
+        {/* </Profiler>s */}
+        {  
           renderingInfos.map((wordPointProps, i) => {
-            console.log(renderingInfos);
             return <WordPoint
-              key={'word-point' + i}
-              updateRenderingAnchor={updateRenderingAnchor}
-              {...wordPointProps}
+            key={'word-point' + i}
+            updateRenderingAnchor={updateRenderingAnchor}
+            {...wordPointProps}
             />
           })
         }
-        <GridCells
-          width={752.390625}
-          height={845.09375}
-          resolution={100}
-        />
+        
       </svg>
     </div>
   );
@@ -117,14 +114,48 @@ function GridCells(props: any) {
   return (
     <g>
       {
-        [...Array(props.resolution)].map((x, i) => {
-          return <rect 
-            x={i * props.width/100}
-            y={i * props.width/100}
-            width={props.width/100}
-            height={props.height/100}/>
+        [...Array(props.resolution)].map((row, i) => {
+          return [...Array(props.resolution)].map((cell, j) => {
+            return <GridCell
+              key={i*props.resolution + j}
+              fill={'#EE0000'}
+              x={i * props.width/props.resolution}
+              y={j * props.width/props.resolution}
+              
+              width={props.width/props.resolution}
+              height={props.height/props.resolution}/>
+          })
         })
       }
     </g>
   )
+}
+
+function GridCell(props: any) {
+  const [fill, setFill] = useState<string>(props.fill);
+
+  const handleMouseOver = () => {
+    setFill("#000000")
+  }
+
+  return <rect
+    onMouseOver={handleMouseOver}
+    fill={fill}
+    
+    x={props.x}
+    y={props.y}
+    width={props.width}
+    height={props.height}/>
+}
+
+function onRenderCallback(
+  id: any, // the "id" prop of the Profiler tree that has just committed
+  phase: any, // either "mount" (if the tree just mounted) or "update" (if it re-rendered)
+  actualDuration: any, // time spent rendering the committed update
+  baseDuration: any, // estimated time to render the entire subtree without memoization
+  startTime: any, // when React began rendering this update
+  commitTime: any, // when React committed this update
+  interactions: any, // the Set of interactions belonging to this update
+) {
+  // Aggregate or log render timings...
 }

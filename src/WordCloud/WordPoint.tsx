@@ -44,38 +44,38 @@ export default function WordPoint(props: WordPointProps) {
       console.log(ref.current.getBBox());
       
 
-      let appendingTo: string = findAppendingTo(props.appendingTo);
-      if (appendingTo === 'up') {
-        props.updateRenderingAnchor({
-          x: props.x + ref.current.getBBox().width,
-          y: props.y,
-          appendingTo: appendingTo,
-        });
-      } else if (appendingTo === 'right') {
-        props.updateRenderingAnchor({
-          x: props.x + ref.current.getBBox().width,
-          y: props.y,
-          appendingTo: appendingTo,
-        });
-      } else if (appendingTo === 'down') {
+      // let appendingTo: string = findAppendingTo(props.appendingTo);
+      // if (appendingTo === 'up') {
         props.updateRenderingAnchor({
           x: props.x,
-          y: props.y + ref.current.getBBox().height,
-          appendingTo: appendingTo,
+          y: props.y - ref.current.getBBox().height,
         });
-      } else if (appendingTo === 'left') {
-        props.updateRenderingAnchor({
-          x: props.x + ref.current.getBBox().width,
-          y: props.y + ref.current.getBBox().height,
-          appendingTo: appendingTo,
-        });
-      } else {
-        props.updateRenderingAnchor({
-          x: props.x + ref.current.getBBox().width,
-          y: props.y + ref.current.getBBox().height,
-          appendingTo: appendingTo,
-        });
-      }
+      //   appendingTo: appendingTo,
+      // } else if (appendingTo === 'right') {
+      //   props.updateRenderingAnchor({
+      //     x: props.x + ref.current.getBBox().width,
+      //     y: props.y,
+      //     appendingTo: appendingTo,
+      //   });
+      // } else if (appendingTo === 'down') {
+      //   props.updateRenderingAnchor({
+      //     x: props.x,
+      //     y: props.y + ref.current.getBBox().height,
+      //     appendingTo: appendingTo,
+      //   });
+      // } else if (appendingTo === 'left') {
+      //   props.updateRenderingAnchor({
+      //     x: props.x + ref.current.getBBox().width,
+      //     y: props.y + ref.current.getBBox().height,
+      //     appendingTo: appendingTo,
+      //   });
+      // } else {
+      //   props.updateRenderingAnchor({
+      //     x: props.x + ref.current.getBBox().width,
+      //     y: props.y + ref.current.getBBox().height,
+      //     appendingTo: appendingTo,
+      //   });
+      // }
 
     }
   }, []);
@@ -101,13 +101,12 @@ export default function WordPoint(props: WordPointProps) {
 
   return (
     <g>
-      {/* <rect x={bBox.x} y={bBox.y} width="100" height="100" rx="15" /> */}
       <text 
         className={className}
         ref={element => { ref.current = element; }}
         x={bBox.x}
         y={bBox.y}
-        fontSize={10 + ((props.weight - 2) * 10)}     
+        fontSize={props.weight * 5}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}  
       >

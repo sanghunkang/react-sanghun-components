@@ -1,0 +1,18 @@
+.response-chain {
+  width: 90vw;
+  height: 90vh;
+  background-color: $blue-10;
+}
+
+.response-chain__column {
+  fill: $magenta-20;
+}
+
+.response-chain__option-rect {
+  fill: $green-40;
+  // opacity: 0.5;
+}
+
+.response-chain__option-text {
+  alignment-baseline: hanging;
+}
