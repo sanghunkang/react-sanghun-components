@@ -42,7 +42,7 @@ export default function ResponseTransitions(props: ResponseTransitionsProps) {
             <path 
               d={findPath(sourceCoordinate, targetCoordinate, sourceCoordinate.width * 0.125)}
               stroke="blue"
-              strokeWidth={transition.count ** 3 / 100}
+              strokeWidth={transition.count ** 1.2 /50}
               fill="none"
             />
           );

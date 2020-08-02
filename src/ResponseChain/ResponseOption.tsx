@@ -78,7 +78,8 @@ export default function ResponseOption(props: ResponseOptionProps) {
         y={props.y}
         fontSize={12}
       >
-        {props.optionText + ': '+ responseMap[props.optionText]}
+        {props.optionText} 
+        {/* {responseMap[props.optionText]} */}
       </text>
     </g>
   )
